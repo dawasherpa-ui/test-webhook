@@ -57,7 +57,7 @@ const handleStripeWebhook = async (event) => {
 
 app.post('/webhook', async (req, res) => {
   const sig = req.headers['stripe-signature'];
-
+console.log(sig);
   if (!sig) {
     return res.status(400).send('Stripe Signature missing');
   }
@@ -67,7 +67,7 @@ app.post('/webhook', async (req, res) => {
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, stripeWebhookSecret);
   } catch (err) {
-    console.error('Webhook signature verification failed.', err.message);
+    console.log('Webhook signature verification failed.', err.message);
     return res.status(400).send('Webhook signature verification failed');
   }
 
